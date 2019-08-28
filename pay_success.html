@@ -1,0 +1,245 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta content="telephone=no,email=no" name="format-detection"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+<title>主界面</title>
+<link href="./style.css" rel="stylesheet">
+<link href="./bootstrap.min.css" rel="stylesheet">
+<script type="text/javascript" src="./jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="./publish.js"></script>
+<script type="text/javascript" src="./bootstrap.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/clipboard.js/1.5.12/clipboard.min.js"></script> 
+
+</head>
+
+
+<body style="width:100%; height:100%">
+
+<!--/*-----------主界面-----------*/--> 
+
+
+<script>			
+var maxtime;
+if(window.name==''){ 
+	maxtime = 15*60;
+}else{
+	maxtime = window.name;
+}
+function CountDown(){
+	if(maxtime>=0){
+		minutes = Math.floor(maxtime/60);
+		seconds = Math.floor(maxtime%60);
+		msg = "剩余时间："+minutes+"分"+seconds+"秒";
+		document.getElementById("time-title").innerHTML = msg;
+
+		if(maxtime == 5*60) 
+			$(document).on('click', '#btn-04', function() {
+				$(document).dialog({
+					autoClose: 2500,
+					content: '注意，还有5分钟!',
+				});
+			});
+			--maxtime;
+			window.name = maxtime; 
+	}
+	else{
+		clearInterval(time);
+		var order_no = $('#order_no').val();
+		alert(order_no);
+		//return;
+		 $.ajax({
+			type: "POST",
+			url: '{:url("edit_order")}',
+			data: {order_no:order_no},
+			dataType: "json",
+			success: function(res){
+				if (res.status==1) {
+					alert(res.msg);
+					window.location.href="/";
+				}else{
+					alert(res.msg);
+					return false;
+				}
+			}
+		});
+	}
+}
+time = setInterval("CountDown()",1000);           
+</script>
+
+
+ <div class="main">
+     <div class="main-news">                  
+          <div class="repayment">正在支付<span><b>未付款</b><img src="./time.png"></br><i id="time-title"></i></span></div>
+		  <input type="hidden" name="m_id" id="m_id" value="{$order.m_id}">
+		  <input type="hidden" name="custom_id" id="custom_id" value="{$order.custom_id}">
+		  <input type="hidden" name="exchange_rate" id="exchange_rate" value="{$order.exchange_rate}">
+          <p><label>订单编号</label><input type="text" id="order_no" value="{$order.order_no}" readonly="readonly"></p>
+          <p><label>创建时间</label><input type="text" id="create_time" value="{$order.create_time}" readonly="readonly"></p>
+          <p><label>客户昵称</label><input type="text" id="custom_name" value="{$order.custom_name}" readonly="readonly"></p>
+           <p class="copy"><label>您将支付的金额</label><span data-clipboard-action="copy" data-clipboard-target="#target" id="copy_btn"><img src="./copy.png"></span><span class="blue" id="equal_cny" >{$order.equal_cny}</span><b class="blue">¥</b><span id="target" style="opacity: 0;width:0px;display:block;"></span></p>
+      
+          <p class="tips">支付信息<span style="font-size:14px;">（*必填）</span></p>
+          <span class="tips" style="padding:0px 20px;">姓名<span style="font-size:14px;">（*必填）</span></span><input type="text" value="{$order.custom_name}" id="name" name="drawee_name" placeholder="请输入支付人姓名" style="width:60%;">
+          <h1 class="titleinfo">您需要在15分钟内向以下账户完成支付</h1>
+      </div>
+      
+      
+      <div class="mode-choice">
+          <div class="mode1">
+		    <input type="hidden" name="pay_type" id="pay_type" value="">
+          	<h1><img src="./zhi.png">支付宝</h1>
+          	<div class="start-hiding mode_show mode_none">
+			  {volist name="alipay" id="vo"}
+				  <img src="{$vo.due_acc_2d_pic}" id="due_acc_2d_pic">
+				  <p><label>收款人</label><b id="target1">{$vo.due_inst_name}</b><span class="btn" data-clipboard-action="copy" data-clipboard-target="#target1" id="copy_btn1"><img src="./copy.png"></span></p>
+				  <p><label>支付宝收款账户</label><b id="target2">{$vo.pic_desc}</b><span class="btn" data-clipboard-action="copy" data-clipboard-target="#target2" id="copy_btn2"><img src="./copy.png"></span></p>
+			  {/volist}
+          	</div>
+          </div>
+          
+          <div class="mode2">
+		    <input type="hidden" name="pay_type" id="pay_type" value="">
+          	<h1><img src="./credit-card.png">银行卡</h1>
+          	<div class="start-hiding mode_show mode_none">
+			{volist name="bank" id="vo"}
+              <p><label>收款人</label><b id="target3">{$vo.name}</b><span class="btn" data-clipboard-action="copy" data-clipboard-target="#target3" id="copy_btn3"><img src="./copy.png"></span></p>
+              <p><label>银行卡卡号</label><b id="target4">{$vo.card_no}</b><span class="btn" data-clipboard-action="copy" data-clipboard-target="#target4" id="copy_btn4"><img src="./copy.png"></span></p>
+              <p><label>开户行网点</label><b id="target5">{$vo.bank_branch}</b><span class="btn" data-clipboard-action="copy" data-clipboard-target="#target5" id="copy_btn5"><img src="./copy.png"></span></p>
+			 {/volist}
+          	</div>
+          </div>
+     </div>
+          
+      
+    <div class="remarks remarks-top">
+     <span style="font-size:14px;">备注（如他人代付，多个账户支付等情况请备注）</span>
+     <input type="text" value="" name="remarks" id="remarks">
+    </div>
+     
+     
+    <!-- <div class="fullbutton"  style="margin-bottom:15px"><a href="#">提交</a></div>-->
+</div>
+<p class="k">&nbsp;</p>
+ 
+ <div class="footer-bottom">
+    <a href="###" class="cancel">取消</a>
+    <a href="###" class="done">已完成支付</a>
+ </div>  
+
+<!--弹出层-->
+<div class="black"></div>
+
+<div class="popup">
+   <div class="cancel-popup">
+    <div>
+       <img src="./exclamation-mark.png">
+       <span>确认取消支付吗？<br>频繁取消将影响您的信誉！</span>
+    </div>
+    <p><a  onclick="return_home()" class="confirm">确认取消</a><a href="###" class="return">返回并继续支付</a></p>
+   </div>
+   
+    <div class="submission-popup">
+        <div><img src="./exclamation-mark.png"><span>您是否已经向指定账户转账？</span></div>
+        <p class="tips">并核对支付方式，支付卡主姓名，转账金额</p>
+        <p class="button-submit"><a class="return">返回修改</a><a onclick="pay_ok()" class="confirm">确认提交</a></p>
+   </div>
+    
+</div>
+
+   
+</body>
+</html>
+<script>
+function pay_ok(){
+	var m_id = $('#m_id').val();
+	var custom_id = $('#custom_id').val();
+	var custom_name = $('#custom_name').val();
+	var order_no = $('#order_no').val();
+	var amount = $('#equal_cny').html();
+	var remarks = $('#remarks').val();
+	var drawee_name = $('#name').val();
+	var pay_type = $('#pay_type').val();
+	
+	if(drawee_name=="") {
+		alert('支付人姓名不能为空');
+		return false;
+	}
+	if(pay_type=="") {
+		alert('支付方式不能为空');
+		return false;
+	}
+	
+	if(pay_type == 2){
+		var due_acc_2d_pic = $('#due_acc_2d_pic').attr("src");
+		var due_inst_name = $('#target1').html();
+		var pic_desc = $('#target2').html();
+		
+	　　$.ajax({
+			type: "POST",
+			url: '{:url("edit")}',
+			data: {m_id:m_id,custom_id:custom_id,custom_name:custom_name,order_no:order_no,amount:amount,remarks:remarks,pay_type:pay_type,drawee_name:drawee_name,due_acc_2d_pic:due_acc_2d_pic,due_inst_name:due_inst_name,pic_desc:pic_desc},
+			dataType: "json",
+			success: function(res){
+			var jsonObj = JSON.parse(res);
+
+			if (jsonObj.res==true) {
+				alert('支付成功');
+				window.location.href=jsonObj.callback_url;
+			}else{
+				alert('支付失败');
+				return false;
+			}
+			}
+		});
+		
+
+	}else{
+		var bank_name = $('#target5').html();
+		var card_no = $('#target4').html();
+		var name = $('#target3').html();
+		
+		
+	 　　$.ajax({
+			type: "POST",
+			url: '{:url("edit")}',
+			data: {m_id:m_id,custom_id:custom_id,custom_name:custom_name,order_no:order_no,amount:amount,remarks:remarks,pay_type:pay_type,drawee_name:drawee_name,bank_name:bank_name,card_no:card_no,name:name},
+			dataType: "json",
+			success: function(res){
+				var jsonObj = JSON.parse(res);
+				if (jsonObj.res==true) {
+					alert('支付成功');
+					window.location.href=jsonObj.callback_url;
+				}else{
+					alert(res.msg);
+					return false;
+				}
+			}
+		});
+		
+	}
+}
+
+function return_home(){
+	var order_no = $('#order_no').val();
+	//alert(order_no);return;
+	 $.ajax({
+		type: "POST",
+		url: '{:url("edit_order")}',
+		data: {order_no:order_no},
+		dataType: "json",
+		success: function(res){
+			if (res.status==1) {
+				window.location.href="/";
+			}else{
+				alert(res.msg);
+				return false;
+			}
+		}
+	});
+}
+</script>
