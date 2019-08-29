@@ -11,7 +11,8 @@ $(function() {
 			$(".mode1 .mode_show").toggleClass(".mode1 mode_none");
 			$(".mode2 .mode_show").addClass(".mode2 mode_none")
 			$(".mode2 h1.add").removeClass( "add" );
-
+			$("[name=payMode]").eq(0).prop("checked", true);
+			$("[name=payMode]").eq(1).prop("checked", false);
 	});
 	$( ".mode2 h1").click( function(){
 			$(this).toggleClass( "add" );
@@ -19,6 +20,8 @@ $(function() {
 			$(".mode2 .mode_show").toggleClass(".mode2 mode_none");
 			$(".mode1 .mode_show").addClass(".mode1 mode_none");
 			$(".mode1 h1.add").removeClass( "add" );	
+			$("[name=payMode]").eq(0).prop("checked", false);
+			$("[name=payMode]").eq(1).prop("checked", true);
 	});
 	
 	
