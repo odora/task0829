@@ -473,6 +473,38 @@ label{
    float:left;
 }
 
+/* 支付提醒对话框 */
+#payRemindModal .cont {
+}
+
+#payRemindModal .icon {
+	float: left;
+	width: 24px;
+	height:24px;
+}
+#payRemindModal .icon img {
+	width: 100%;
+	height: auto;
+}
+#payRemindModal .text {
+	font-size: 16px;
+	color: #4A4A4A;
+	margin-left: 40px;
+}
+#payRemindModal .text strong {
+	font-size: 16px;
+	color: #4A4A4A;
+	font-weight: normal;
+	color: #FB0000;
+}
+#payRemindModal .modal-body {
+	padding: 30px 30px;
+}
+#payRemindModal .actions {
+	margin-top: 20px;
+	text-align: center;
+}
+
 @media screen and (max-width:400px) { 
 
 .cancel-popup span {

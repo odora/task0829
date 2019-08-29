@@ -151,8 +151,21 @@ time = setInterval("CountDown()",1000);
     
 </div>
 
-   
-
+<div class="modal fade" id="payRemindModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="cont clearfix">
+                    <div class="icon"><img src="./主界面_files/alert.png"></div>
+                    <div class="text">请务必填写<strong>实际付款人真实姓名</strong>。<br>否则无法核对付款人信息，可能导致无法到账！</div>
+                </div>
+                <div class="actions">
+                    <button type="button" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>  
 
 <script>
 function pay_ok(){
@@ -178,7 +191,7 @@ function pay_ok(){
 		var due_acc_2d_pic = $('#due_acc_2d_pic').attr("src");
 		var due_inst_name = $('#target1').html();
 		var pic_desc = $('#target2').html();
-		
+
 	　　$.ajax({
 			type: "POST",
 			url: '/index.php/site/index/edit.html',
@@ -242,4 +255,13 @@ function return_home(){
 		}
 	});
 }
+
+jQuery(document).ready(function($) {
+  $('#payRemindModal').on("show.bs.modal",function(e) {
+      $(this).css('display', 'block');
+      var _h = $(window).height()/2-$('#payRemindModal .modal-dialog').height()/2;
+      $(this).find('.modal-dialog').css({'margin-top': _h});
+  });
+  $('#payRemindModal').modal({"backdrop":"static","show":true});
+});
 </script></body></html>
