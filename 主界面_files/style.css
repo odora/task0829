@@ -156,12 +156,15 @@ label{
     line-height: 20px;
 }
 .main-news .titleinfo .inner {
-	white-space: nowrap;
+	margin: 0 19px;
     color: #FF9800;
     font-size: 12px;
+	/*
+	white-space: nowrap;
 	transform: scale(0.9,0.9);
 	-ms-transform: scale(0.9,0.9);
 	-webkit-transform: scale(0.9,0.9);
+	*/
 }
 .main-news .tips em {
         display: inline-block;
