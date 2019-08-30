@@ -20,7 +20,18 @@
     <div class="page-success">
       <div class="topimg"><img src="./succ.png"></div>
       <div class="cont">您的订单已生成！<br>请耐心等待客服核对！</div>
-      <div class="smalltxt">五秒钟后自动返回</div>
+      <div class="smalltxt">五秒钟后自动返回(还剩 <span id="wait5sec"></span> 秒)</div>
     </div>
+    <script>
+      var time = 5;
+      function wait5() {
+        var dom = document.getElementById("wait5sec");
+        if (time >= 0) {
+          dom.innerHTML = time--;
+          setTimeout(wait5, 1000);
+        }
+      }
+      wait5();
+    </script>
   </body>
 <html>
