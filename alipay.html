@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <title>支付宝demo</title>
+    <link href="./主界面_files/style.css?_=201910201350" rel="stylesheet">
+    <link href="./主界面_files/bootstrap.min.css" rel="stylesheet">
+    <style>
+      html,body,.main { width: 100%; height: 100%; }
+      .bkcolr { background: #0e8ded; height: 100%; }
+      .bkcolr .bktop { color: #fff; padding: 0.3em 1em; }
+      .bkcolr .main-block { margin: 0 5px; background: #fff; border-radius: 4px; height: calc(100vh - 33px); }
+      .bkcolr .main-block .head { position: relative; border-bottom: 1px solid #f3f5f5; }
+      .bkcolr .head .cloze { position: absolute; left: 14px; top: 10px; background: url(./close.png) no-repeat 0 0/100% 100%; width: 15px; height: 16px; }
+      .bkcolr .head .title { text-align: center; line-height: 36px; font-weight: 700; }
+      .bkcolr .head .zhi { vertical-align: -5px; margin-right: 4px; display: inline-block; background: url(./alipay.png) no-repeat 0 0/100% 100%; width: 20px; height: 20px; }
+      .bkcolr .amount { line-height: 48px; margin-top: 20%; text-align: center; font-size: 28px; font-weight: 700; }
+      .bkcolr .amount span { font-size: 18px; padding-right: 2px; font-weight: normal; }
+      .bkcolr .qrcode { text-align: center; }
+      .bkcolr .qrcode img { width: 60%; height: auto; }
+      .bkcolr .footer { position: fixed; left: 0; bottom: 16px; width: 100%; text-align: center; }
+      .bkcolr .footer .btn-pay { background: #0e8ded; color: #fff; display: block; padding-top: 7px; padding-bottom: 6px; margin: 0 20px; }
+    </style>
+    <script type="text/javascript" src="./主界面_files/jquery-1.11.0.min.js.下载"></script>
+    <script type="text/javascript" src="./主界面_files/bootstrap.min.js.下载"></script>
+    <script src="./主界面_files/clipboard.min.js.下载"></script> 
+  </head>
+
+  <body>
+    <div class="main">
+      <div class="bkcolr">
+        <div class="bktop">正在向商家支付中....</div>
+        <div class="main-block">
+          <div class="head">
+            <i class="cloze"></i>
+            <div class="title">
+              <i class="zhi"></i>支付宝&nbsp;花呗
+            </div>
+          </div>
+          <div class="amount">
+            <span>&yen;</span>450.60
+          </div>
+          <div class="qrcode">
+            <img src="./qrcode.png">
+          </div>
+          <div class="footer">
+            <a href="javascript:;" class="btn-pay">立即付款</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
