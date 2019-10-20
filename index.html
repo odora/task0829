@@ -1,270 +1,56 @@
 <!DOCTYPE html>
-<!-- saved from url=(0081)http://www.us.com/index.php/site/index/pay_success.html?order_no=2019061414023### -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <title>支付宝demo</title>
+    <link href="./主界面_files/style.css?_=201910201350" rel="stylesheet">
+    <link href="./主界面_files/bootstrap.min.css" rel="stylesheet">
+    <style>
+      html,body,.main { width: 100%; height: 100%; }
+      .bkcolr { background: #0e8ded; height: 100%; }
+      .bkcolr .bktop { color: #fff; padding: 0.3em 1em; }
+      .bkcolr .main-block { margin: 0 5px; background: #fff; border-radius: 4px; height: calc(100vh - 33px); }
+      .bkcolr .main-block .head { position: relative; border-bottom: 1px solid #f3f5f5; }
+      .bkcolr .head .cloze { position: absolute; left: 14px; top: 10px; background: url(./close.png) no-repeat 0 0/100% 100%; width: 15px; height: 16px; }
+      .bkcolr .head .title { text-align: center; line-height: 36px; font-weight: 700; }
+      .bkcolr .head .zhi { vertical-align: -5px; margin-right: 4px; display: inline-block; background: url(./alipay.png) no-repeat 0 0/100% 100%; width: 20px; height: 20px; }
+      .bkcolr .amount { line-height: 48px; margin-top: 20%; text-align: center; font-size: 28px; font-weight: 700; }
+      .bkcolr .amount span { font-size: 18px; padding-right: 2px; font-weight: normal; }
+      .bkcolr .qrcode { text-align: center; }
+      .bkcolr .qrcode img { width: 60%; height: auto; }
+      .bkcolr .footer { position: fixed; left: 0; bottom: 16px; width: 100%; text-align: center; }
+      .bkcolr .footer .btn-pay { background: #0e8ded; color: #fff; display: block; padding-top: 7px; padding-bottom: 6px; margin: 0 20px; }
+    </style>
+    <script type="text/javascript" src="./主界面_files/jquery-1.11.0.min.js.下载"></script>
+    <script type="text/javascript" src="./主界面_files/bootstrap.min.js.下载"></script>
+    <script src="./主界面_files/clipboard.min.js.下载"></script> 
+  </head>
 
-<meta http-equiv="Cache-Control" content="no-cache">
-<meta content="telephone=no,email=no" name="format-detection">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
-<title>主界面</title>
-<link href="./主界面_files/style.css?_=201908292139" rel="stylesheet">
-<link href="./主界面_files/bootstrap.min.css" rel="stylesheet">
-<style>
-</style>
-<script type="text/javascript" src="./主界面_files/jquery-1.11.0.min.js.下载"></script>
-<script type="text/javascript" src="./主界面_files/publish.js.下载?_=201908292139"></script>
-<script type="text/javascript" src="./主界面_files/bootstrap.min.js.下载"></script>
-
-<script src="./主界面_files/clipboard.min.js.下载"></script> 
-
-</head>
-
-
-<body style="width:100%; height:100%">
-
-<!--/*-----------主界面-----------*/--> 
-
-
-<script>			
-var maxtime;
-if(window.name==''){ 
-	maxtime = 15*60;
-}else{
-	maxtime = window.name;
-}
-function CountDown(){
-	if(maxtime>=0){
-		minutes = Math.floor(maxtime/60);
-		seconds = Math.floor(maxtime%60);
-		msg = "剩余时间："+minutes+"分"+seconds+"秒";
-		document.getElementById("time-title").innerHTML = msg;
-
-		if(maxtime == 5*60) 
-			$(document).on('click', '#btn-04', function() {
-				$(document).dialog({
-					autoClose: 2500,
-					content: '注意，还有5分钟!',
-				});
-			});
-			--maxtime;
-			window.name = maxtime; 
-	}
-	else{
-		clearInterval(time);
-		var order_no = $('#order_no').val();
-		alert(order_no);
-		//return;
-		 $.ajax({
-			type: "POST",
-			url: '/index.php/site/index/edit_order.html',
-			data: {order_no:order_no},
-			dataType: "json",
-			success: function(res){
-				if (res.status==1) {
-					alert(res.msg);
-					window.location.href="/";
-				}else{
-					alert(res.msg);
-					return false;
-				}
-			}
-		});
-	}
-}
-time = setInterval("CountDown()",1000);           
-</script>
-
-
- <div class="main">
-     <div class="main-news">                  
-          <div class="repayment">正在支付<span><b>未付款</b><img src="./主界面_files/time.png"><br><i id="time-title">剩余时间：10分36秒</i></span></div>
-		  <input type="hidden" name="m_id" id="m_id" value="12">
-		  <input type="hidden" name="custom_id" id="custom_id" value="0">
-		  <input type="hidden" name="exchange_rate" id="exchange_rate" value="6.980000">
-          <p><label>订单编号</label><input type="text" id="order_no" value="2019061414023" readonly="readonly"></p>
-          <p><label>创建时间</label><input type="text" id="create_time" value="2019-06-14 09:59:07" readonly="readonly"></p>
-          <p><label>客户昵称</label><input type="text" id="custom_name" value="99网" readonly="readonly"></p>
-           <p class="copy"><label>您将支付的金额</label><span data-clipboard-action="copy" data-clipboard-target="#target" id="copy_btn"><img src="./主界面_files/copy.png"></span><span class="blue" id="equal_cny">698.00</span><b class="blue">¥</b><span id="target" style="opacity: 0;width:0px;display:block;">698.00</span></p>
-
-           <div class="line-divider"></div>
-      
-          <p class="tips" style="margin-top: 3px;">支付信息<span style="font-size:14px;"></span></p>
-          <p class="tips">姓名<span style="font-size:14px;">（*必填）</span><input type="text" value="" id="name" name="drawee_name" placeholder="请输入实际付款人真实姓名"></p>
-          <div class="titleinfo"><div class="inner">请您保存以下支付信息，打开支付宝或者网银客户端完成支付</div></div>
-      </div>
-      
-      
-      <div class="mode-choice">
-          <div class="mode1">
-		    <input type="hidden" name="pay_type" id="pay_type" value="1">
-            <h1 class="" style="position:relative;"><img src="./主界面_files/zhi.png">支付宝<input type="radio" name="payMode" value="1"></h1>
-          	<div class="start-hiding mode_show mode_none .mode1">
-			  				  <img src="./主界面_files/3b275bc6e1c4dbdbf3e4fa0bb32e3b3e.jpg" id="due_acc_2d_pic">
-				  <p><label>收款人</label><b id="target1">收款人</b><span class="btn" data-clipboard-action="copy" data-clipboard-target="#target1" id="copy_btn1"><img src="./主界面_files/copy.png"></span></p>
-				  <p><label>支付宝收款账户</label><b id="target2">aaaa</b><span class="btn" data-clipboard-action="copy" data-clipboard-target="#target2" id="copy_btn2"><img src="./主界面_files/copy.png"></span></p>
-			            	</div>
-          </div>
-          
-          <div class="mode2">
-		    <input type="hidden" name="pay_type" id="pay_type" value="">
-          	<h1 class="" style="position:relative;"><img src="./主界面_files/credit-card.png">银行卡<input type="radio" name="payMode" value="1"></h1>
-          	<div class="start-hiding mode_show .mode2 mode_none">
-			              <p><label>收款人</label><b id="target3">111</b><span class="btn" data-clipboard-action="copy" data-clipboard-target="#target3" id="copy_btn3"><img src="./主界面_files/copy.png"></span></p>
-              <p><label>银行卡卡号</label><b id="target4">0000 1222 2222 7890</b><span class="btn" data-clipboard-action="copy" data-clipboard-target="#target4" id="copy_btn4"><img src="./主界面_files/copy.png"></span></p>
-              <p><label>开户行网点</label><b id="target5">北京中关村支行</b><span class="btn" data-clipboard-action="copy" data-clipboard-target="#target5" id="copy_btn5"><img src="./主界面_files/copy.png"></span></p>
-			           	</div>
-          </div>
-     </div>
-          
-      
-    <div class="remarks remarks-top">
-     <span style="font-size:13px;white-space:nowrap;">备注（如他人代付，多个账户支付等情况请备注）</span>
-     <input type="text" value="" name="remarks" id="remarks">
-    </div>
-     
-     
-    <!-- <div class="fullbutton"  style="margin-bottom:15px"><a href="#">提交</a></div>-->
-</div>
-<p class="k">&nbsp;</p>
- 
- <div class="footer-bottom">
-    <a href="http://www.us.com/index.php/site/index/pay_success.html?order_no=2019061414023###" class="cancel">取消</a>
-    <!--
-    <a href="http://www.us.com/index.php/site/index/pay_success.html?order_no=2019061414023###" class="done">已完成支付</a>
-    -->
-    <a href="#" class="done">已完成支付</a>
- </div>  
-
-<!--弹出层-->
-<div class="black"></div>
-
-<div class="popup">
-   <div class="cancel-popup">
-    <div>
-       <img src="./主界面_files/exclamation-mark.png">
-       <span>确认取消支付吗？<br>频繁取消将影响您的信誉！</span>
-    </div>
-    <p><a onclick="return_home()" class="confirm">确认取消</a><a href="http://www.us.com/index.php/site/index/pay_success.html?order_no=2019061414023###" class="return">返回并继续支付</a></p>
-   </div>
- 
-    <div class="submission-popup">
-        <div><img src="./主界面_files/exclamation-mark.png"><span>您是否已经向指定账户转账？</span></div>
-        <p class="tips">并核对支付方式，支付卡主姓名，转账金额</p>
-        <p class="button-submit"><a class="return">返回修改</a><a onclick="pay_ok()" class="confirm">确认提交</a></p>
-   </div>
- 
-</div>
-
-<div class="modal fade" id="payRemindModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="cont clearfix">
-                    <div class="icon"><img src="./主界面_files/alert.png"></div>
-                    <div class="text">请务必填写<strong>实际付款人真实姓名</strong>。否则无法核对付款人信息，可能导致无法到账！</div>
-                </div>
-                <div class="actions">
-                    <button type="button" data-dismiss="modal">关闭</button>
-                </div>
+  <body>
+    <div class="main">
+      <div class="bkcolr">
+        <div class="bktop">正在向商家支付中....</div>
+        <div class="main-block">
+          <div class="head">
+            <i class="cloze"></i>
+            <div class="title">
+              <i class="zhi"></i>支付宝&nbsp;花呗
             </div>
+          </div>
+          <div class="amount">
+            <span>&yen;</span>450.60
+          </div>
+          <div class="qrcode">
+            <img src="./qrcode2.png">
+          </div>
+          <div class="footer">
+            <a target="_blank" href="alipayqr://platformapi/startapp?saId=10000007&qrcode=https%3A%2F%2Fnxt.nongxinyin.com%2Fbuybal-api%2Fv1.0%2Fcashier%2Finitializ%2FA1FF20A31EC3BAA1C503B63201AA0037" class="btn-pay">立即付款</a>
+          </div>
         </div>
+      </div>
     </div>
-</div>  
-
-<script>
-function pay_ok(){
-	var m_id = $('#m_id').val();
-	var custom_id = $('#custom_id').val();
-	var custom_name = $('#custom_name').val();
-	var order_no = $('#order_no').val();
-	var amount = $('#equal_cny').html();
-	var remarks = $('#remarks').val();
-	var drawee_name = $('#name').val();
-	var pay_type = $('#pay_type').val();
-	
-	if(drawee_name=="") {
-		alert('支付人姓名不能为空');
-		return false;
-	}
-	if(pay_type=="") {
-		alert('支付方式不能为空');
-		return false;
-	}
-	
-	if(pay_type == 2){
-		var due_acc_2d_pic = $('#due_acc_2d_pic').attr("src");
-		var due_inst_name = $('#target1').html();
-		var pic_desc = $('#target2').html();
-
-	　　$.ajax({
-			type: "POST",
-			url: '/index.php/site/index/edit.html',
-			data: {m_id:m_id,custom_id:custom_id,custom_name:custom_name,order_no:order_no,amount:amount,remarks:remarks,pay_type:pay_type,drawee_name:drawee_name,due_acc_2d_pic:due_acc_2d_pic,due_inst_name:due_inst_name,pic_desc:pic_desc},
-			dataType: "json",
-			success: function(res){
-			var jsonObj = JSON.parse(res);
-
-			if (jsonObj.res==true) {
-				alert('支付成功');
-				window.location.href=jsonObj.callback_url;
-			}else{
-				alert('支付失败');
-				return false;
-			}
-			}
-		});
-		
-
-	}else{
-		var bank_name = $('#target5').html();
-		var card_no = $('#target4').html();
-		var name = $('#target3').html();
-		
-		
-	 　　$.ajax({
-			type: "POST",
-			url: '/index.php/site/index/edit.html',
-			data: {m_id:m_id,custom_id:custom_id,custom_name:custom_name,order_no:order_no,amount:amount,remarks:remarks,pay_type:pay_type,drawee_name:drawee_name,bank_name:bank_name,card_no:card_no,name:name},
-			dataType: "json",
-			success: function(res){
-				var jsonObj = JSON.parse(res);
-				if (jsonObj.res==true) {
-					alert('支付成功');
-					window.location.href=jsonObj.callback_url;
-				}else{
-					alert(res.msg);
-					return false;
-				}
-			}
-		});
-		
-	}
-}
-
-function return_home(){
-	var order_no = $('#order_no').val();
-	//alert(order_no);return;
-	 $.ajax({
-		type: "POST",
-		url: '/index.php/site/index/edit_order.html',
-		data: {order_no:order_no},
-		dataType: "json",
-		success: function(res){
-			if (res.status==1) {
-				window.location.href="/";
-			}else{
-				alert(res.msg);
-				return false;
-			}
-		}
-	});
-}
-
-jQuery(document).ready(function($) {
-  $('#payRemindModal').on("show.bs.modal",function(e) {
-      $(this).css('display', 'block');
-      var _h = $(window).height()/2-$('#payRemindModal .modal-dialog').height()/2;
-      $(this).find('.modal-dialog').css({'margin-top': _h});
-  });
-  $('#payRemindModal').modal({"backdrop":"static","show":true});
-});
-</script></body></html>
+  </body>
+</html>
